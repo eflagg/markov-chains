@@ -52,6 +52,26 @@ def make_text(chains):
     text = ""
 
     # your code goes here
+    #while_theres_a_key = True
+    random_key = choice(chains.keys())
+    text = random_key[0] + " " + random_key[1]
+
+     #for key in chains:
+    while True:
+
+        random_add = choice(chains[random_key])
+        #print "Random add ",random_add
+        random_key = (random_key[1], random_add)
+        #print "Random key ",random_key
+        #random_add = choice(chains[new_key])
+        
+        text = text + " " + random_add
+        if chains[random_key] is False:
+            break
+
+
+    print text
+
 
     return text
 
@@ -66,6 +86,6 @@ input_text = open_and_read_file(input_path)
 chains = make_chains(input_text)
 
 # Produce random text
-#random_text = make_text(chains)
+random_text = make_text(chains)
 
 #print random_text
