@@ -45,12 +45,24 @@ def make_chains(text_string, n):
         # print key_word_tuple
         #, words[i + 1])
         chains[key_word_tuple] = chains.get(key_word_tuple, [])
-        # if (i + 2) < len(words):
+        # if (i + n) == (len(words) - 1):
+        #     next_word = words[0]
+        #     print "i", i
+        #     print "BLINGGGG"
+        #     print "End of Range ",next_word, "key word tuple ", key_word_tuple
+        # # if (i + 2) < len(words):
+        # else: 
         next_word = words[i+n]
+            # print next_word
+
         chains[key_word_tuple].append(next_word)
+      
+
         
-        
-    #print chains
+    
+    
+    # print chains["I","am"] 
+    # print chains
     return chains
 
 
@@ -58,8 +70,17 @@ def make_text(chains, n):
     """Takes dictionary of markov chains; returns random text."""
 
     text = ""
-
+    # variable = "Dog"
     random_key = choice(chains.keys())
+    #print random_key
+    # while variable == "Dog":
+    while True:
+        if random_key[0][0].isupper():
+            # variable = "Cat"
+            break
+        else:   
+            random_key = choice(chains.keys())
+            
     text = " ".join(random_key)
     #random_key[0] + " " + random_key[1]
     #Loops through dictionary called chains and raondomly 
@@ -67,19 +88,21 @@ def make_text(chains, n):
     while True:
 
         random_add = choice(chains[random_key])
-        print random_key[1-n:]
-        print random_add
+        # print random_key[1-n:]
+        # print random_add
         new_list=list(random_key[1-n:])
         new_list.append(random_add)
         random_key = tuple(new_list)
         #random_key = tuple([random_key[1-n:], random_add])
         #test_key = random_key[n+1:]
-        print "test random key: ", random_key, "random add: ", random_add
+        #print "test random key: ", random_key, "random add: ", random_add
         sequence = (text,random_add)
         text = " ".join([text, random_add])
         #text = text + " " + random_add
         # if the key has no value, stop, you're at the end!
         if random_key not in chains:
+            break
+        elif random_key[n-1][-1] in [".", "!", "?"] and len(text) > 400:
             break
 
     return text
@@ -91,8 +114,8 @@ def make_text(chains, n):
 
 input_text = open_and_read_file()
 
-chains = make_chains(input_text, 3)
+chains = make_chains(input_text, 2)
 
-random_text = make_text(chains, 3)
+random_text = make_text(chains, 2)
 
 print random_text
